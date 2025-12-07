@@ -1,13 +1,14 @@
 import { useState } from "react"
 import ContactList from "./ContactList"
+import { Contact } from "../utils/types"
 
 const AddContactForm = ()=>{
 
-    const [name,setName] = useState("")
-    const [contact,setContact] = useState("")
-    const [email,setEmail] = useState("")
-    const [contacts,setContacts] = useState([])
-    const[isSaved,setIsSaved] =useState(false)
+    const [name,setName] = useState<string>("")
+    const [contact,setContact] = useState<string>("")
+    const [email,setEmail] = useState<string>("")
+    const [contacts,setContacts] = useState<Contact[]>([])
+    const[isSaved,setIsSaved] =useState<boolean>(false)
 
     function addContact (e){
         e.preventDefault()

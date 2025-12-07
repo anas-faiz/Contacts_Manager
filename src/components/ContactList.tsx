@@ -1,5 +1,14 @@
-const ContactList = ({ contact }) => {
-  return (
+import type { Contact } from "../utils/types";
+
+interface ContactListProps{
+        contact: Contact[]
+    }
+
+const ContactList = ({ contact }: ContactListProps) => {
+
+    
+
+    return (
     <div className="border bg-amber-200 m-4">
       <h2>Saved Contacts</h2>
 
