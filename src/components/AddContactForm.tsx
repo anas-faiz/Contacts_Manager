@@ -1,46 +1,78 @@
-import { useState } from "react"
-import ContactList from "./ContactList"
-import  type{ Contact } from "../utils/types"
+import { useEffect, useState } from "react";
+import ContactList from "./ContactList";
+import type { Contact } from "../utils/types";
 
-const AddContactForm = ()=>{
+const AddContactForm = () => {
+  const [name, setName] = useState<string>("");
+  const [contact, setContact] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
 
-    const [name,setName] = useState<string>("")
-    const [contact,setContact] = useState<string>("")
-    const [email,setEmail] = useState<string>("")
-    const [contacts,setContacts] = useState<Contact[]>([])
-    const[isSaved,setIsSaved] =useState<boolean>(false)
+  // Load from localStorage only once (React 19-safe)
+  const [contacts, setContacts] = useState<Contact[]>(() => {
+    const saved = localStorage.getItem("contacts");
+    return saved ? JSON.parse(saved) : [];
+  });
 
-    function addContact (e: { preventDefault: () => void }){
-        e.preventDefault()
+  const [isSaved, setIsSaved] = useState<boolean>(contacts.length>0);
 
-        const newContacts = {
-            name,contact,email,
-        }
+  // Save to localStorage whenever contacts change
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
-        setContacts(prev => [...prev,newContacts]);
+  function addContact(e: React.FormEvent<HTMLButtonElement>) {
+    e.preventDefault();
 
-        setName("")
-        setEmail("")
-        setContact("")
+    const newContact: Contact = {
+      name,
+      contact,
+      email,
+    };
 
+    setContacts((prev) => [...prev, newContact]);
 
-        setIsSaved(true)
+    setName("");
+    setEmail("");
+    setContact("");
 
+    setIsSaved(true);
+  }
 
-    }
+  return (
+    <div className="p-10">
+      <form className="flex flex-col gap-1">
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="border bg-amber-50 p-2"
+          placeholder="Name"
+        />
 
-    return (
-        <div className="p-10  ">
-            <form className=" flex flex-col gap-1">
-                <input value={name} onChange={(e)=>setName(e.target.value)} className="border bg-amber-50 p-2" placeholder="Name"></input>
-                <input value={contact} onChange={(e)=>setContact(e.target.value)} className="border bg-amber-50 p-2" placeholder="Phone Number"></input>
-                <input value={email} onChange={(e)=>setEmail(e.target.value)} className="border bg-amber-50 p-2" placeholder="Email"></input>
-                <button onClick={addContact} className="border bg-blue-500 p-2 w-1/2 text-center">Add Contact</button>
-            </form>
-            {isSaved && (<ContactList contact={contacts}/>)}
-        </div>
-    )
+        <input
+          value={contact}
+          onChange={(e) => setContact(e.target.value)}
+          className="border bg-amber-50 p-2"
+          placeholder="Phone Number"
+        />
 
-}
+        <input
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          className="border bg-amber-50 p-2"
+          placeholder="Email"
+        />
 
-export default AddContactForm
+        <button
+          onClick={addContact}
+          className="border bg-blue-500 p-2 w-1/2 text-center"
+        >
+          Add Contact
+        </button>
+      </form>
+
+      {isSaved && <ContactList contact={contacts} />}
+    </div>
+  );
+};
+
+export default AddContactForm;
