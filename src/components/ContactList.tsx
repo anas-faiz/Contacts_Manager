@@ -1,15 +1,13 @@
 import { type Contact } from "../utils/types";
 
-interface ContactListProps{
-        contact: Contact[]
-        onDelete:(id: string) => void
-    }
+interface ContactListProps {
+  contact: Contact[];
+  onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
+}
 
-const ContactList = ({ contact,onDelete }: ContactListProps) => {
-
-    
-
-    return (
+const ContactList = ({ contact, onDelete, onEdit }: ContactListProps) => {
+  return (
     <div className="border bg-amber-200 m-4">
       <h2>Saved Contacts</h2>
 
@@ -19,8 +17,18 @@ const ContactList = ({ contact,onDelete }: ContactListProps) => {
           <h2 className="m-1">{c.contact}</h2>
           <h2 className="m-1">{c.email}</h2>
 
-          <button className="border bg-blue-400 p-1 mr-2">Edit</button>
-          <button onClick={()=>onDelete(c.id)} className="border bg-red-400 p-1">Delete</button>
+          <button
+            onClick={() => onEdit(c.id)}
+            className="border bg-blue-400 p-1 mr-2"
+          >
+            Edit
+          </button>
+          <button
+            onClick={() => onDelete(c.id)}
+            className="border bg-red-400 p-1"
+          >
+            Delete
+          </button>
         </div>
       ))}
     </div>
