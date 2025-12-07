@@ -13,7 +13,7 @@ const AddContactForm = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [isSaved, setIsSaved] = useState<boolean>(contacts.length>0);
+  const [isSaved, setIsSaved] = useState<boolean>(contacts.length > 0);
 
   // Save to localStorage whenever contacts change
   useEffect(() => {
@@ -24,6 +24,7 @@ const AddContactForm = () => {
     e.preventDefault();
 
     const newContact: Contact = {
+      id: crypto.randomUUID(),
       name,
       contact,
       email,
@@ -37,6 +38,11 @@ const AddContactForm = () => {
 
     setIsSaved(true);
   }
+
+  function deleteContact(id:string){
+    setContacts(prev => prev.filter(c => c.id !== id));
+  }
+
 
   return (
     <div className="p-10">
@@ -70,7 +76,7 @@ const AddContactForm = () => {
         </button>
       </form>
 
-      {isSaved && <ContactList contact={contacts} />}
+      {isSaved && <ContactList contact={contacts} onDelete={deleteContact} />}
     </div>
   );
 };
