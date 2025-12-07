@@ -1,6 +1,6 @@
 import { useState } from "react"
 import ContactList from "./ContactList"
-import { Contact } from "../utils/types"
+import  type{ Contact } from "../utils/types"
 
 const AddContactForm = ()=>{
 
@@ -10,7 +10,7 @@ const AddContactForm = ()=>{
     const [contacts,setContacts] = useState<Contact[]>([])
     const[isSaved,setIsSaved] =useState<boolean>(false)
 
-    function addContact (e){
+    function addContact (e: { preventDefault: () => void }){
         e.preventDefault()
 
         const newContacts = {
