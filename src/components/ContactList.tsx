@@ -1,14 +1,20 @@
-const ContactList = ()=>{
-    
-    return(
-        <div className="border bg-amber-200 m-4">
-            <h1 className="m-1">Name</h1>
-            <h2 className="m-1">Contact Number</h2>
-            <h2 className="m-1">Email</h2>
-            <button className="border bg-blue-400 p-1 mr-2">Edit</button>
-            <button className="border bg-red-400 p-1">Delete</button>
-        </div>
-    )
-}
+const ContactList = ({ contact }) => {
+  return (
+    <div className="border bg-amber-200 m-4">
+      <h2>Saved Contacts</h2>
 
-export default ContactList
+      {contact.map((c, idx) => (
+        <div key={idx}>
+          <h1 className="m-1">{c.name}</h1>
+          <h2 className="m-1">{c.contact}</h2>
+          <h2 className="m-1">{c.email}</h2>
+
+          <button className="border bg-blue-400 p-1 mr-2">Edit</button>
+          <button className="border bg-red-400 p-1">Delete</button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default ContactList;
