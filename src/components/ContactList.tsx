@@ -8,24 +8,31 @@ interface ContactListProps {
 
 const ContactList = ({ contact, onDelete, onEdit }: ContactListProps) => {
   return (
-    <div className="border bg-amber-200 m-4">
-      <h2>Saved Contacts</h2>
+    <div className="border bg-amber-200 m-4 p-4 rounded">
+      <h2 className="text-xl font-semibold mb-3">Saved Contacts</h2>
 
-      {contact.map((c, idx) => (
-        <div key={idx}>
-          <h1 className="m-1">{c.name}</h1>
-          <h2 className="m-1">{c.contact}</h2>
-          <h2 className="m-1">{c.email}</h2>
+      {contact.length === 0 && (
+        <p className="text-gray-700">No contacts found.</p>
+      )}
+
+      {contact.map((c) => (
+        <div
+          key={c.id}
+          className="border bg-white p-3 my-2 rounded shadow-sm"
+        >
+          <h1 className="font-bold text-lg">{c.name}</h1>
+          <p className="text-sm text-gray-700">{c.contact}</p>
+          <p className="text-sm text-gray-700 mb-2">{c.email}</p>
 
           <button
             onClick={() => onEdit(c.id)}
-            className="border bg-blue-400 p-1 mr-2"
+            className="border bg-blue-500 text-white px-2 py-1 mr-2 rounded"
           >
             Edit
           </button>
           <button
             onClick={() => onDelete(c.id)}
-            className="border bg-red-400 p-1"
+            className="border bg-red-500 text-white px-2 py-1 rounded"
           >
             Delete
           </button>
