@@ -1,4 +1,4 @@
-import { type Contact } from "../utils/types";
+import  type { Contact } from "../utils/types";
 
 interface ContactListProps {
   contact: Contact[];
